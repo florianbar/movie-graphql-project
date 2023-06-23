@@ -1,29 +1,29 @@
-import { gql, useQuery } from '@apollo/client';
+import { useState } from 'react';
+import { useQuery } from '@apollo/client';
 
-const GET_MOVIES_QUERY = gql`
-    {
-        movies {
-            id
-            name
-            genre
-        }
-    }
-`;
+import { GET_MOVIES_QUERY } from '../queries/queries';
+import MovieDetails from './MovieDetails';
 
 const MovieList = () => {
-    const { loading, error, data } = useQuery(GET_MOVIES_QUERY);
+    const [selected, setSelected] = useState(null);
+    const { loading, data } = useQuery(GET_MOVIES_QUERY);
 
     if (loading) return <p>Loading...</p>;
 
     return (
-        <ul>
-            {data.movies.map(movie => (
-                <li key={movie.id}>
-                    {movie.name}{" "}
-                    <small>({movie.genre})</small>
-                </li>
-            ))}
-        </ul>
+        <>
+            <ul>
+                {data.movies.map(movie => (
+                    <li key={movie.id} onClick={() => setSelected(movie.id)}>
+                        {movie.name}{" "}
+                        <small>({movie.genre})</small>
+                    </li>
+                ))}
+            </ul>
+            {selected && (
+                <MovieDetails id={selected} />
+            )}
+        </>
     );
 }
   
