@@ -1,6 +1,7 @@
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 import MovieList from './components/MovieList';
+import AddMovie from './components/AddMovie';
 
 const client = new ApolloClient({
   uri: 'http://localhost:5000/graphql',
@@ -13,6 +14,7 @@ function App() {
       <div className="App">
         <h1>Watch List</h1>
         <MovieList />
+        <AddMovie />
       </div>
     </ApolloProvider>
   );
